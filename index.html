@@ -559,10 +559,7 @@
   .coords input { width: 74px; height: 30px; border-radius: 8px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); }
 
   /* view */
-  .seg2 { display: inline-flex; padding: 2px; gap: 2px; background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.06); border-radius: 9px; }
-  .seg2 button { height: 26px; padding: 0 11px; border-radius: 7px; background: transparent; border: none; color: var(--text-dim); font-size: 0.74rem; cursor: pointer; }
-  .seg2 button.active { background: rgba(255,255,255,0.1); color: #e6edf3; }
-  .layers { display: flex; flex-wrap: wrap; gap: 3px; margin-left: auto; }
+  .layers { display: flex; flex-wrap: wrap; gap: 3px; }
   .pill {
     height: 26px; padding: 0 9px; border-radius: 999px; cursor: pointer;
     background: transparent; border: 1px dashed rgba(255,255,255,0.16); color: var(--text-dim); font-size: 0.7rem;
@@ -680,10 +677,6 @@
         </div>
 
         <div class="ctl-row">
-          <div class="seg2" id="modeSeg">
-            <button data-mode="diurn" class="active">Diurnal</button>
-            <button data-mode="sinodic">Synodic</button>
-          </div>
           <div class="layers" id="layerPills">
             <button class="pill on" data-layer="showGrid">Grid</button>
             <button class="pill on" data-layer="showHorizon">Horizon</button>
@@ -856,13 +849,13 @@
         <p><strong>The 24-hour dial</strong>: the first circle in the readings panel is the observer's sky at the chosen place over one whole civil day, from midnight (bottom) to noon (top). The thick ring is the Sun: gold while it is above the horizon, orange in civil twilight (down to 6° below the horizon), blue in nautical (12°) and astronomical (18°) twilight, dark at night. The thin ring shows when the Moon is above the horizon. The part of the day already gone is dimmed. The hand is civil time, the gold triangle is true solar noon, and the white ticks are sunrise and sunset. True noon rarely falls at 12:00, because of longitude, the time zone and the equation of time.</p>
         <p><strong>Sunrise and sunset</strong>: computed for a geometric altitude of zero, without atmospheric refraction and without the disc's semi-diameter. That is why they can come a few minutes later at sunrise and earlier at sunset than in official tables. Moonrise and moonset also ignore the Moon's parallax.</p>
         <p><strong>Solar time</strong>: computed from the Sun's position on the disc (15° = 1h) and includes the equation of time. The day / twilight / night state comes from the Sun's real altitude at the chosen place. For a custom place without a latitude, the state is approximated from longitude.</p>
-        <p><strong>The control panel</strong>: three rows, one per role. <strong>Time</strong>: LIVE (real time, the default at start), play backward, pause, play forward, plus the speed slider, logarithmic, from one minute to one year per second (m/s, h/s, d/s: model minutes, hours, days per real second; the mouse wheel on the dial fine-tunes it) and three presets: 10 m/s, 1 h/s, 1 d/s. <strong>The moment</strong>: date and time in the chosen place's time zone; Set (or Enter) takes the model there instantly and leaves it paused, so you see exactly the moment you asked for. Next to them, the place. <strong>The view</strong>: Diurnal / Synodic and the drawn layers. On the keyboard: Space pause / play, L live, the arrows one hour per step (with Shift one day, with Alt one minute), always paused.</p>
+        <p><strong>The control panel</strong>: three rows, one per role. <strong>Time</strong>: LIVE (real time, the default at start), play backward, pause, play forward, plus the speed slider, logarithmic, from one minute to one year per second (m/s, h/s, d/s: model minutes, hours, days per real second; the mouse wheel on the dial fine-tunes it) and three presets: 10 m/s, 1 h/s, 1 d/s. <strong>The moment</strong>: date and time in the chosen place's time zone; Set (or Enter) takes the model there instantly and leaves it paused, so you see exactly the moment you asked for. Next to them, the place. <strong>The view</strong>: the drawn layers, Compass and Sky. On the keyboard: Space pause / play, L live, the arrows one hour per step (with Shift one day, with Alt one minute), always paused.</p>
         <p><strong>The starting point</strong>: the default place is Greenwich, on the prime meridian, at GMT (UTC+0, no daylight saving time), the origin of both longitude and the model's clock. London, in the list, follows British civil time, with summer time.</p>
         <p><strong>Moon phase</strong>: the percentage is the illuminated fraction of the disc, (1 − cos φ) / 2, where φ is the position in the synodic cycle. That is why the Moon goes quickly from 50% to almost 100%, while around full moon the percentage barely changes.</p>
         <p><strong>The Moon's horns</strong>: the preview in the readings panel shows the phase as an observer at the chosen place sees it, with the top of the page towards the zenith. The angle is computed from the altitude and azimuth of the Sun and the Moon, so it turns during the evening exactly as it turns in the sky. The marker on the dial stays turned towards the Sun, because there the drawing is a map seen from above, not a view from the eye.</p>
         <p><strong>Declination</strong>: positive north of the celestial equator, negative south. The Sun stays within ±23.44°, because it moves along the ecliptic. The Moon reaches ±28.6°, because its orbit is tilted 5.14° to the ecliptic. That is why the Moon's marker can go inside the Tropic of Cancer and the Sun's cannot.</p>
         <p><strong>The projection</strong>: azimuthal equidistant, with the North Pole at the centre. A point's radius is its true distance to the pole, i.e. (90 − latitude) degrees of arc. Distances from the centre are therefore exact, while those between any two cities are not. One degree of arc = 111.32 km.</p>
-        <p><strong>Continents</strong>: the coastlines and large lakes (Natural Earth, 1:110m, public domain), drawn on the same azimuthal equidistant map as the Earth seen from above the North Pole, with Greenwich at the top. They show over which land or sea the Sun and the Moon stand at the zenith, where the day / night line crosses the continents, and where the chosen place lies. In Diurnal the continents stay fixed and the sky turns over them; in Synodic the frame follows the Sun and the continents turn under it. They are hidden in Sky mode, where the map is mirrored. The same data drives the WIND model.</p>
+        <p><strong>Continents</strong>: the coastlines and large lakes (Natural Earth, 1:110m, public domain), drawn on the same azimuthal equidistant map as the Earth seen from above the North Pole, with Greenwich at the top. They show over which land or sea the Sun and the Moon stand at the zenith, where the day / night line crosses the continents, and where the chosen place lies. The continents stay fixed and the sky turns over them, as it does over the observer. They are hidden in Sky mode, where the map is mirrored. The same data drives the WIND model.</p>
         <p><strong>Reference circles</strong>: <span class="sw" style="background:rgba(190,225,245,0.75)"></span> the celestial equator, <span class="sw" style="background:rgba(255,165,90,0.75)"></span> the tropics (Cancer to the north, Capricorn to the south, ±23.44°), <span class="sw" style="background:rgba(120,190,235,0.7)"></span> the polar circles (Arctic and Antarctic, ±66.56°). They are drawn on the disc without labels, so they do not overlap.</p>
         <p><strong>Compass and Sky</strong>: on a phone, Compass rotates the dial with the device's orientation, so the direction towards the pole from your place points to true north; held flat, everything on the map lies in the direction in which you see it on the horizon. The phone's compass shows magnetic north, and the correction (default +1°, for Greenwich) brings it to true north. My location sets the place from the device's position. Without a sensor (computer), the dial turns towards the south, with south at the top. Held overhead, screen down, the phone shows the sky correctly with no mirroring at all: east stays on the left when your back is to the north, because turning the phone over does the mirroring by itself. Sky is for a screen looked at normally, on a computer or with the phone in hand: the map is mirrored and rotated as for someone with their back to the north looking up, so north is at the top, south at the bottom, east on the left, and the constellation figures appear as in the sky. The gold arrowhead on the edge of the dial always shows the chosen place's north: on the line from the place through the North Pole, on the side opposite the place. With Compass on, Sky is inactive. With both off, the dial returns to its usual form.</p>
         <p><strong>Stars and constellations</strong>: the white dots are the brightest stars (down to magnitude 3.5), larger the brighter they are. The blue lines and names are the real zodiac constellations, the 12 plus Ophiuchus. Positions are corrected for precession (rigorous IAU rotation) to the displayed date. The map is seen from above, like a globe: the direction and altitude of every star from the chosen place are correct, but the figures appear mirrored compared with how you see them looking up. Compared with the gold sign glyphs, you can see the offset of almost one sign brought by precession. The layer is turned on from the Stars pill (off at start; the data loads only then). Data: Yale Bright Star Catalogue, via d3-celestial (Olaf Frohn, BSD licence).</p>
@@ -917,7 +910,6 @@ const state = {
   day: 0,             // simulated days
   running: true,
   speed: 10,          // days per real second
-  mode: 'diurn',      // 'diurn' (Diurnal) | 'sinodic' (Synodic)
   showGrid: true,
   showHorizon: true,
   showTerminator: true,
@@ -986,7 +978,6 @@ function fitCanvas(cv, ctx, baseW) {
 }
 
 // ============ UI ELEMENTS ============
-const modeSeg = document.getElementById('modeSeg');
 const citySelect = document.getElementById('citySelect');
 const customLonRow = document.getElementById('customLonRow');
 const customLon = document.getElementById('customLon');
@@ -1646,7 +1637,7 @@ function drawMoonBody(c, x, y, r, phase, rot) {
   c.restore();
 }
 
-// ============ PLACE MARKER + TIME REFERENCES (diurnal mode) ============
+// ============ PLACE MARKER + TIME REFERENCES ============
 function cityXY(city) {
   const r = radiusForDeclination(city.lat, R_MAP);
   const ang = (270 - city.lon) * DEG; // Greenwich at the top, east anticlockwise (correct)
@@ -1654,9 +1645,6 @@ function cityXY(city) {
 }
 
 function drawTimeReferences() {
-  // Only in diurnal mode (absolute frame, fixed map)
-  if (state.mode !== 'diurn') return;
-
   const city = getSelectedCity();
   if (!city) return;
 
@@ -2069,10 +2057,10 @@ function computeView() {
   view.rot = 0;
   const c = getSelectedCity();
   const aN = (270 - (c ? c.lon : 0)) + 180;        // place -> pole direction, on the map (degrees, screen)
-  if (state.mode === 'diurn' && state.compass) {
+  if (state.compass) {
     const target = -90 - view.heading;              // where north has to land on screen
     view.rot = (target - aN) * DEG;
-  } else if (state.mode === 'diurn' && view.mirror) {
+  } else if (view.mirror) {
     // Sky without the compass: as for someone with their back to the north looking up:
     // north at the top of the screen, south at the bottom, east on the left
     view.rot = (-90 - (180 - aN)) * DEG;
@@ -2093,7 +2081,6 @@ function endView() { ctx.restore(); }
 // Arrowhead on the edge of the dial, towards the chosen place's north: on the line place -> North Pole,
 // beyond the pole (the side opposite the place). With the compass it shows true north; in Sky, north in the sky.
 function drawNorthArrow() {
-  if (state.mode !== 'diurn') return;               // in Synodic the map rotates
   const c = getSelectedCity();
   if (!c) return;
   const a = (270 - c.lon) * DEG;                    // angle of the place on the map
@@ -2178,7 +2165,6 @@ async function enableCompass(on) {
   window.removeEventListener('deviceorientation', onOrient);
   view.smooth = null;
   if (!on) return;
-  modeSeg.querySelector('[data-mode="diurn"]').click();   // the compass only makes sense with the fixed map
   view.gotSensor = false;
   view.heading = 180;
   st.textContent = 'looking for the compass…';
@@ -2204,7 +2190,7 @@ async function enableCompass(on) {
 // Coastlines and lakes from Natural Earth 1:110m (public domain), the same data as the WIND model.
 // Packed as little-endian Int16 in base64: [n, lon×100, lat×100, ...] per polyline.
 // Drawn on the map as the Earth: Greenwich at the top, east anticlockwise, radius = distance to the pole.
-// They sit in the rotated frame with the Sun and the Moon: fixed in Diurnal, turning under the Sun in Synodic.
+// They stay fixed, as the Earth under the turning sky.
 // Hidden in Sky mode, where the map is mirrored as the sky seen from below.
 let continentsPath = null;
 function buildContinentsPath() {
@@ -2242,26 +2228,10 @@ function drawContinents() {
 }
 
 // ============ MAIN LOGIC ============
-function getDisplayTransform() {
-  if (state.mode === 'diurn') return 0;
-  const thetaS = (360 * state.day + eotDeg(state.day) + SUN_PHASE) % 360;
-  return (-90 * DEG) - thetaS * DEG;
-}
-
 function polarToXY(polar) {
   return {
     x: CX + polar.r * Math.cos(polar.theta),
     y: CY + polar.r * Math.sin(polar.theta),
-  };
-}
-
-function rotatePoint(p, rot) {
-  if (rot === 0) return p;
-  const cos = Math.cos(rot), sin = Math.sin(rot);
-  const dx = p.x - CX, dy = p.y - CY;
-  return {
-    x: CX + dx * cos - dy * sin,
-    y: CY + dx * sin + dy * cos,
   };
 }
 
@@ -2276,12 +2246,8 @@ function render() {
   drawHourRing();
   drawTimeReferences();
 
-  // Apply the global rotation for the sky, the Sun, the Moon and the continents
-  const R = getDisplayTransform();
+  // Earth and sky in the same fixed frame: the continents stay, the sky turns over them
   ctx.save();
-  ctx.translate(CX, CY);
-  ctx.rotate(R);
-  ctx.translate(-CX, -CY);
 
   drawContinents();
   drawHorizon();
@@ -3099,7 +3065,7 @@ function animate(ts) {
 // The control panel has three rows, one per role, so it fits under the fixed dial:
 //   1. time      LIVE / backward / pause / forward, speed slider, three presets
 //   2. moment    date and time (the place's local time) + Set, and the place
-//   3. view      Diurnal / Synodic and the drawn layers
+//   3. view      the drawn layers, Compass and Sky
 // Any jump (Set, arrow keys) leaves the model paused exactly at the chosen moment.
 
 // Speed in model days per real second. The slider is logarithmic, from 1 minute/s to 1 year/s.
@@ -3262,14 +3228,7 @@ trSeg.querySelectorAll('button').forEach((b) => {
   b.addEventListener('click', () => setTransport(b.dataset.tr));
 });
 
-// ---- view ----
-modeSeg.querySelectorAll('button').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    modeSeg.querySelectorAll('button').forEach((b) => b.classList.remove('active'));
-    btn.classList.add('active');
-    state.mode = btn.dataset.mode;
-  });
-});
+// ---- layers ----
 document.querySelectorAll('#layerPills .pill').forEach((p) => {
   p.addEventListener('click', () => {
     const k = p.dataset.layer;
