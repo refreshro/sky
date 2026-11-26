@@ -858,7 +858,7 @@
         <p><strong>Continents</strong>: the coastlines and large lakes (Natural Earth, 1:110m, public domain), drawn on the same azimuthal equidistant map as the Earth seen from above the North Pole, with Greenwich at the top. They show over which land or sea the Sun and the Moon stand at the zenith, where the day / night line crosses the continents, and where the chosen place lies. The continents stay fixed and the sky turns over them, as it does over the observer. They are hidden in Sky mode, where the map is mirrored. The same data drives the WIND model.</p>
         <p><strong>Reference circles</strong>: <span class="sw" style="background:rgba(190,225,245,0.75)"></span> the celestial equator, <span class="sw" style="background:rgba(255,165,90,0.75)"></span> the tropics (Cancer to the north, Capricorn to the south, ±23.44°), <span class="sw" style="background:rgba(120,190,235,0.7)"></span> the polar circles (Arctic and Antarctic, ±66.56°). They are drawn on the disc without labels, so they do not overlap.</p>
         <p><strong>Compass and Sky</strong>: on a phone, Compass rotates the dial with the device's orientation, so the direction towards the pole from your place points to true north; held flat, everything on the map lies in the direction in which you see it on the horizon. The phone's compass shows magnetic north, and the correction (default +1°, for Greenwich) brings it to true north. My location sets the place from the device's position. Without a sensor (computer), the dial turns towards the south, with south at the top. Held overhead, screen down, the phone shows the sky correctly with no mirroring at all: east stays on the left when your back is to the north, because turning the phone over does the mirroring by itself. Sky is for a screen looked at normally, on a computer or with the phone in hand: the map is mirrored and rotated as for someone with their back to the north looking up, so north is at the top, south at the bottom, east on the left, and the constellation figures appear as in the sky. The gold arrowhead on the edge of the dial always shows the chosen place's north: on the line from the place through the North Pole, on the side opposite the place. With Compass on, Sky is inactive. With both off, the dial returns to its usual form.</p>
-        <p><strong>Stars and constellations</strong>: the white dots are the stars that form the figures of the zodiac constellations, larger the brighter they are; the other stars of the sky are left out, so the figures read clearly. The blue lines and names are the real zodiac constellations, the 12 plus Ophiuchus. Positions are corrected for precession (rigorous IAU rotation) to the displayed date. The map is seen from above, like a globe: the direction and altitude of every star from the chosen place are correct, but the figures appear mirrored compared with how you see them looking up. Compared with the gold sign glyphs, you can see the offset of almost one sign brought by precession. The layer is turned on from the Stars pill (off at start; the data loads only then). Draco, the constellation around the pole of the ecliptic, is drawn too, with dashed lines and a quieter label, and the pole itself is marked by a small gold cross: the fixed direction perpendicular to the plane of the Earth's orbit (RA 18h, Dec +66.56°), around which the celestial pole, the centre of the map, circles once in about 25 800 years. With the layer on, the map disc is darkened by a night veil, so the stars and the figures stand out; the Sun, the Moon, the signs and the place marker stay above it. Data: Yale Bright Star Catalogue, via d3-celestial (Olaf Frohn, BSD licence).</p>
+        <p><strong>Stars and constellations</strong>: the white dots are the stars that form the figures of the zodiac constellations, larger the brighter they are; the other stars of the sky are left out, so the figures read clearly. The blue lines and names are the real zodiac constellations, the 12 plus Ophiuchus. Positions are corrected for precession (rigorous IAU rotation) to the displayed date. The map is seen from above, like a globe: the direction and altitude of every star from the chosen place are correct, but the figures appear mirrored compared with how you see them looking up. Compared with the gold sign glyphs, you can see the offset of almost one sign brought by precession. The layer is turned on from the Stars pill (off at start; the data loads only then). Draco is drawn too, with dashed lines and a quieter label: the pole of the ecliptic, the fixed direction perpendicular to the plane of the Earth's orbit (RA 18h, Dec +66.56°), lies inside it, and the celestial pole, the centre of the map, circles around it once in about 25 800 years. With the layer on, the map disc is darkened by a night veil, so the stars and the figures stand out; the Sun, the Moon, the signs and the place marker stay above it. Data: Yale Bright Star Catalogue, via d3-celestial (Olaf Frohn, BSD licence).</p>
         <p><strong>Signs on the dial</strong>: the gold glyphs sit on the Sun's path (the ecliptic), in the middle of each sign, and turn with the sky. The bright ones are above the chosen place's horizon, the faint ones below it; in the evening you see the ones rising in the east. They are turned on and off from the Signs pill (off at start).</p>
         <p><strong>Sign and constellation</strong>: in the Sun and Moon cards, "On the ecliptic" shows the zodiac sign, an equal 30° sector counted from the March equinox, and the constellation in front of which the body stands in the sky, by the official boundaries. The two differ by almost a whole sign: the equinox has shifted ~24° since the signs were fixed (precession). The constellations have unequal widths and there are 13 on the ecliptic, with Ophiuchus between Scorpius and Sagittarius: the Sun crosses Scorpius in about 7 days, Virgo in about 45. The Moon, which strays up to ~5° from the ecliptic, can also pass through corners of Cetus, Orion, Sextans, Corvus or Auriga.</p>
         <p><strong>Seasons and hemispheres</strong>: the season and the names of the equinoxes and solstices follow the chosen place's hemisphere. The moments are the same for the whole Earth, but in the southern hemisphere the labels swap: the December solstice is the summer solstice there, and the March equinox is the autumn one.</p>
@@ -1895,7 +1895,7 @@ function drawGleasonLight() {
 // (right ascension, declination, in degrees); STAR_DATA = [ra, dec, magnitude].
 // Only the zodiac constellations are kept (the 12 + Ophiuchus): their figure lines and the stars
 // at the vertices of those lines (163 stars, magnitude 0.9 to 5.2); the other stars are not in the data.
-// Draco is kept apart (d.draco: its lines and 14 stars): the ecliptic pole lies inside it, so it is drawn
+// Draco is kept apart (d.draco: its lines and 15 stars): the ecliptic pole lies inside it, so it is drawn
 // in a slightly different style, as the setting of the pole rather than one of the zodiac figures.
 // The data sits in <script type="application/json" id="starData"> and is parsed only the first time
 // the Stars layer is turned on: at start the browser does not interpret it.
@@ -2006,19 +2006,6 @@ function buildStarLayer(sc) {
     g.beginPath(); g.arc(x, y, r, 0, 2 * Math.PI); g.fill();
   }
 
-  // The ecliptic pole: the fixed direction perpendicular to the plane of the Earth's orbit.
-  // In equinox-of-date coordinates it is always at RA 18h, Dec 90° - obliquity; the celestial pole
-  // (the centre of the map) circles around it once in ~25 800 years.
-  const [px, py] = xy(270, 90 - OBLIQUITY);
-  g.strokeStyle = 'rgba(242,204,96,0.95)';
-  g.lineWidth = 1.4;
-  g.beginPath();
-  g.arc(px, py, 4.5, 0, 2 * Math.PI);
-  g.moveTo(px - 8, py); g.lineTo(px - 2, py);
-  g.moveTo(px + 2, py); g.lineTo(px + 8, py);
-  g.moveTo(px, py - 8); g.lineTo(px, py - 2);
-  g.moveTo(px, py + 2); g.lineTo(px, py + 8);
-  g.stroke();
 }
 
 function drawStars() {
@@ -2053,18 +2040,13 @@ function drawStars() {
     const th = (thetaS + sp.ra - ra) * DEG, r = radiusForDeclination(dec, R_MAP);
     ctx.fillText(name, CX + r * Math.cos(th), CY + r * Math.sin(th));
   }
-  // Draco, in a quieter italic, and the ecliptic pole label next to its cross
+  // Draco, in a quieter italic
   {
     const [ra, dec, name] = sc.dracoLabel;
     const th = (thetaS + sp.ra - ra) * DEG, r = radiusForDeclination(dec, R_MAP);
     ctx.font = 'italic 600 11px system-ui, sans-serif';
     ctx.fillStyle = 'rgba(215,222,235,0.85)';
     ctx.fillText(name, CX + r * Math.cos(th), CY + r * Math.sin(th));
-    const tp = (thetaS + sp.ra - 270) * DEG, rp = radiusForDeclination(90 - OBLIQUITY, R_MAP);
-    ctx.font = '600 9.5px system-ui, sans-serif';
-    ctx.fillStyle = 'rgba(242,204,96,0.95)';
-    ctx.textAlign = 'left';
-    ctx.fillText('ecliptic pole', CX + rp * Math.cos(tp) + 10, CY + rp * Math.sin(tp) + 1);
   }
   ctx.restore();
 }
