@@ -858,7 +858,7 @@
         <p><strong>Continents</strong>: the coastlines and large lakes (Natural Earth, 1:110m, public domain), drawn on the same azimuthal equidistant map as the Earth seen from above the North Pole, with Greenwich at the top. They show over which land or sea the Sun and the Moon stand at the zenith, where the day / night line crosses the continents, and where the chosen place lies. The continents stay fixed and the sky turns over them, as it does over the observer. They are hidden in Sky mode, where the map is mirrored. The same data drives the WIND model.</p>
         <p><strong>Reference circles</strong>: <span class="sw" style="background:rgba(190,225,245,0.75)"></span> the celestial equator, <span class="sw" style="background:rgba(255,165,90,0.75)"></span> the tropics (Cancer to the north, Capricorn to the south, ±23.44°), <span class="sw" style="background:rgba(120,190,235,0.7)"></span> the polar circles (Arctic and Antarctic, ±66.56°). They are drawn on the disc without labels, so they do not overlap.</p>
         <p><strong>Compass and Sky</strong>: on a phone, Compass rotates the dial with the device's orientation, so the direction towards the pole from your place points to true north; held flat, everything on the map lies in the direction in which you see it on the horizon. The phone's compass shows magnetic north, and the correction (default +1°, for Greenwich) brings it to true north. My location sets the place from the device's position. Without a sensor (computer), the dial turns towards the south, with south at the top. Held overhead, screen down, the phone shows the sky correctly with no mirroring at all: east stays on the left when your back is to the north, because turning the phone over does the mirroring by itself. Sky is for a screen looked at normally, on a computer or with the phone in hand: the map is mirrored and rotated as for someone with their back to the north looking up, so north is at the top, south at the bottom, east on the left, and the constellation figures appear as in the sky. The gold arrowhead on the edge of the dial always shows the chosen place's north: on the line from the place through the North Pole, on the side opposite the place. With Compass on, Sky is inactive. With both off, the dial returns to its usual form.</p>
-        <p><strong>Stars and constellations</strong>: the white dots are the stars that form the figures of the zodiac constellations, larger the brighter they are; the other stars of the sky are left out, so the figures read clearly. The blue lines and names are the real zodiac constellations, the 12 plus Ophiuchus. Positions are corrected for precession (rigorous IAU rotation) to the displayed date. The map is seen from above, like a globe: the direction and altitude of every star from the chosen place are correct, but the figures appear mirrored compared with how you see them looking up. Compared with the gold sign glyphs, you can see the offset of almost one sign brought by precession. The layer is turned on from the Stars pill (off at start; the data loads only then). Data: Yale Bright Star Catalogue, via d3-celestial (Olaf Frohn, BSD licence).</p>
+        <p><strong>Stars and constellations</strong>: the white dots are the stars that form the figures of the zodiac constellations, larger the brighter they are; the other stars of the sky are left out, so the figures read clearly. The blue lines and names are the real zodiac constellations, the 12 plus Ophiuchus. Positions are corrected for precession (rigorous IAU rotation) to the displayed date. The map is seen from above, like a globe: the direction and altitude of every star from the chosen place are correct, but the figures appear mirrored compared with how you see them looking up. Compared with the gold sign glyphs, you can see the offset of almost one sign brought by precession. The layer is turned on from the Stars pill (off at start; the data loads only then). With it on, the map disc is darkened by a night veil, so the stars and the figures stand out; the Sun, the Moon, the signs and the place marker stay above it. Data: Yale Bright Star Catalogue, via d3-celestial (Olaf Frohn, BSD licence).</p>
         <p><strong>Signs on the dial</strong>: the gold glyphs sit on the Sun's path (the ecliptic), in the middle of each sign, and turn with the sky. The bright ones are above the chosen place's horizon, the faint ones below it; in the evening you see the ones rising in the east. They are turned on and off from the Signs pill (off at start).</p>
         <p><strong>Sign and constellation</strong>: in the Sun and Moon cards, "On the ecliptic" shows the zodiac sign, an equal 30° sector counted from the March equinox, and the constellation in front of which the body stands in the sky, by the official boundaries. The two differ by almost a whole sign: the equinox has shifted ~24° since the signs were fixed (precession). The constellations have unequal widths and there are 13 on the ecliptic, with Ophiuchus between Scorpius and Sagittarius: the Sun crosses Scorpius in about 7 days, Virgo in about 45. The Moon, which strays up to ~5° from the ecliptic, can also pass through corners of Cetus, Orion, Sextans, Corvus or Auriga.</p>
         <p><strong>Seasons and hemispheres</strong>: the season and the names of the equinoxes and solstices follow the chosen place's hemisphere. The moments are the same for the whole Earth, but in the southern hemisphere the labels swap: the December solstice is the summer solstice there, and the March equinox is the autumn one.</p>
@@ -1670,7 +1670,12 @@ function drawTimeReferences() {
   ctx.arc(CX, CY, R_MAP + 14, aDayStart, aDayEnd, false);
   ctx.stroke();
 
-  // The place marker
+  // With the Stars layer on, the marker is drawn later, above the darkened disc
+  if (!state.showStars) drawPlaceMarker(city);
+}
+
+// The place marker and its label
+function drawPlaceMarker(city) {
   const p = cityXY(city);
   ctx.fillStyle = '#ffffff';
   ctx.beginPath();
@@ -1984,6 +1989,10 @@ function drawStars() {
   ctx.beginPath();
   ctx.arc(CX, CY, R_MAP, 0, 2 * Math.PI);
   ctx.clip();
+  // A night veil over the whole map disc, under the stars: the map, the light and the shading
+  // stay readable underneath, the stars and figures stand out. The Sun and the Moon come after it.
+  ctx.fillStyle = 'rgba(3, 7, 18, 0.62)';
+  ctx.fillRect(CX - R_MAP, CY - R_MAP, 2 * R_MAP, 2 * R_MAP);
   ctx.translate(CX, CY);
   ctx.rotate((thetaS + sp.ra) * DEG);
   ctx.translate(-CX, -CY);
@@ -1996,7 +2005,7 @@ function drawStars() {
   ctx.textBaseline = 'middle';
   ctx.shadowColor = 'rgba(0,0,0,0.8)';
   ctx.shadowBlur = 3;
-  ctx.fillStyle = 'rgba(160,205,255,0.95)';
+  ctx.fillStyle = 'rgba(255,255,255,0.95)';
   for (const [ra, dec, name] of sc.labels) {
     const th = (thetaS + sp.ra - ra) * DEG, r = radiusForDeclination(dec, R_MAP);
     ctx.fillText(name, CX + r * Math.cos(th), CY + r * Math.sin(th));
@@ -2257,6 +2266,7 @@ function render() {
   drawGleasonLight();
   drawStars();
   drawSigns();
+  if (state.showStars) { const c = getSelectedCity(); if (c) drawPlaceMarker(c); }
 
 
   const sPolar = sunPolar(state.day, R_MAP);
